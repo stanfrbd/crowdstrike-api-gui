@@ -148,6 +148,18 @@ $ConnectBtn.Font = 'Microsoft Sans Serif,10'
 $ConnectBtn.ForeColor = "#ffffff"
 $ConnectBtn.Visible = $True
 
+$TenantNoteLabel = New-Object system.Windows.Forms.Label
+$TenantNoteLabel.text = "To perform actions on devices in a child tenant, include only machines from that CID. If your hosts list span multiple tenants, run the script once per tenant and set the matching CID each time."
+$TenantNoteLabel.AutoSize = $false
+$TenantNoteLabel.width = 460
+$TenantNoteLabel.height = 40
+$TenantNoteLabel.location = New-Object System.Drawing.Point(20, 170)
+$TenantNoteLabel.Font = 'Microsoft Sans Serif,9'
+$TenantNoteLabel.ForeColor = "#D0021B"
+$TenantNoteLabel.Visible = $true
+
+$MainForm.Controls.Add($TenantNoteLabel)
+
 $TitleActions = New-Object system.Windows.Forms.Label
 $TitleActions.text = "3 - Perform Action on selected devices"
 $TitleActions.AutoSize = $true
@@ -182,8 +194,23 @@ $TagDeviceBtn.location = New-Object System.Drawing.Point(280, 15)
 $TagDeviceBtn.Font = 'Microsoft Sans Serif,10'
 $TagDeviceBtn.ForeColor = "#ffffff"
 $TagDeviceBtn.Visible = $true
+$TagDeviceBtn.Enabled = $false
 
-$TagDeviceGroupBox.Controls.AddRange(@($DeviceTag, $TagDeviceBtn))
+# enlarge groupbox to fit new button
+$TagDeviceGroupBox.Height = 90
+
+$RemoveTagBtn = New-Object System.Windows.Forms.Button
+$RemoveTagBtn.BackColor = $UnclickableColour
+$RemoveTagBtn.Text = "Remove Tag"
+$RemoveTagBtn.Width = 110
+$RemoveTagBtn.Height = 30
+$RemoveTagBtn.Location = New-Object System.Drawing.Point(280, 50)
+$RemoveTagBtn.Font = 'Microsoft Sans Serif,10'
+$RemoveTagBtn.ForeColor = "#ffffff"
+$RemoveTagBtn.Visible = $true
+$RemoveTagBtn.Enabled = $false
+
+$TagDeviceGroupBox.Controls.AddRange(@($DeviceTag, $TagDeviceBtn, $RemoveTagBtn))
 
 $IsolateGroupBox = New-Object System.Windows.Forms.GroupBox
 $IsolateGroupBox.Location = New-Object System.Drawing.Point(500, 165)
@@ -192,15 +219,16 @@ $IsolateGroupBox.Height = 60
 $IsolateGroupBox.Text = "Network Containment Actions"
 $IsolateGroupBox.Font = 'Microsoft Sans Serif,10,style=Bold'
 
-$IsolateDeviceBtn = New-Object System.Windows.Forms.Button
-$IsolateDeviceBtn.BackColor = $UnclickableColour
-$IsolateDeviceBtn.Text = "Network Contain Devices"
-$IsolateDeviceBtn.Width = 180
-$IsolateDeviceBtn.Height = 30
-$IsolateDeviceBtn.Location = New-Object System.Drawing.Point(20, 20)
-$IsolateDeviceBtn.Font = 'Microsoft Sans Serif,10'
-$IsolateDeviceBtn.ForeColor = "#ffffff"
-$IsolateDeviceBtn.Visible = $true
+$NetworkContainDeviceBtn = New-Object System.Windows.Forms.Button
+$NetworkContainDeviceBtn.BackColor = $UnclickableColour
+$NetworkContainDeviceBtn.Text = "Network Contain Devices"
+$NetworkContainDeviceBtn.Width = 180
+$NetworkContainDeviceBtn.Height = 30
+$NetworkContainDeviceBtn.Location = New-Object System.Drawing.Point(20, 20)
+$NetworkContainDeviceBtn.Font = 'Microsoft Sans Serif,10'
+$NetworkContainDeviceBtn.ForeColor = "#ffffff"
+$NetworkContainDeviceBtn.Visible = $true
+$NetworkContainDeviceBtn.Enabled = $false
 
 $ReleaseFromIsolationBtn = New-Object System.Windows.Forms.Button
 $ReleaseFromIsolationBtn.BackColor = $UnclickableColour
@@ -211,8 +239,9 @@ $ReleaseFromIsolationBtn.Location = New-Object System.Drawing.Point(210, 20)
 $ReleaseFromIsolationBtn.Font = 'Microsoft Sans Serif,10'
 $ReleaseFromIsolationBtn.ForeColor = "#ffffff"
 $ReleaseFromIsolationBtn.Visible = $true
+$ReleaseFromIsolationBtn.Enabled = $false
 
-$IsolateGroupBox.Controls.AddRange(@($IsolateDeviceBtn, $ReleaseFromIsolationBtn))
+$IsolateGroupBox.Controls.AddRange(@($NetworkContainDeviceBtn, $ReleaseFromIsolationBtn))
 
 $InputCsvFileBox = New-Object System.Windows.Forms.GroupBox
 $InputCsvFileBox.width = 880
@@ -272,6 +301,17 @@ $BrowseCsvBtn.ForeColor = "#ffffff"
 $BrowseCsvBtn.Visible = $false
 $BrowseCsvBtn.Enabled = $false
 
+# add a label with short description of what to do with the CSV (should have "Name" header and only hostnames) under the browse button
+$CsvDescLabel = New-Object system.Windows.Forms.Label
+$CsvDescLabel.text = "Select a CSV file with a 'Name' header (one single column) containing hostnames (one per line)."
+$CsvDescLabel.width = 700
+$CsvDescLabel.height = 40
+$CsvDescLabel.location = New-Object System.Drawing.Point(20, 90)
+$CsvDescLabel.Font = 'Microsoft Sans Serif,9'
+# use a visible colour (black) on the white form background
+$CsvDescLabel.ForeColor = "#000000"
+$CsvDescLabel.Visible = $true
+
 # OpenFileDialog for CSV selection
 $OpenCsvDialog = New-Object System.Windows.Forms.OpenFileDialog
 $OpenCsvDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*"
@@ -280,10 +320,10 @@ $OpenCsvDialog.Multiselect = $false
 $CsvPathBox.Visible = $true
 $BrowseCsvBtn.Visible = $true
 
-
 $InputCsvFileBox.Controls.AddRange(@(
         $CsvPathBox,
         $BrowseCsvBtn,
+        $CsvDescLabel,
         $GetDevicesFromQueryBtn,
         $SelectedDevicesBtn,
         $ClearSelectedDevicesBtn
@@ -316,26 +356,6 @@ $ExportLogBtn.Font = 'Microsoft Sans Serif,10'
 $ExportLogBtn.ForeColor = "#ff000000"
 $ExportLogBtn.Visible = $true
 
-$GetActionsHistoryBtn = New-Object system.Windows.Forms.Button
-$GetActionsHistoryBtn.BackColor = $UnclickableColour
-$GetActionsHistoryBtn.text = "Get Actions History"
-$GetActionsHistoryBtn.width = 150
-$GetActionsHistoryBtn.height = 30
-$GetActionsHistoryBtn.location = New-Object System.Drawing.Point(130, 750)
-$GetActionsHistoryBtn.Font = 'Microsoft Sans Serif,10'
-$GetActionsHistoryBtn.ForeColor = "#ffffff"
-$GetActionsHistoryBtn.Visible = $true
-
-$ExportActionsHistoryBtn = New-Object system.Windows.Forms.Button
-$ExportActionsHistoryBtn.BackColor = $UnclickableColour
-$ExportActionsHistoryBtn.text = "Export Actions History"
-$ExportActionsHistoryBtn.width = 150
-$ExportActionsHistoryBtn.height = 30
-$ExportActionsHistoryBtn.location = New-Object System.Drawing.Point(300, 750)
-$ExportActionsHistoryBtn.Font = 'Microsoft Sans Serif,10'
-$ExportActionsHistoryBtn.ForeColor = "#ffffff"
-$ExportActionsHistoryBtn.Visible = $true
-
 $cancelBtn = New-Object system.Windows.Forms.Button
 $cancelBtn.BackColor = '#FFF0F8FF'
 $cancelBtn.text = "Cancel"
@@ -360,7 +380,8 @@ $MainForm.controls.AddRange(@($Title,
         $AppIdBoxLabel, 
         $AppSecretBoxLabel, 
         $CidBoxLabel, 
-        $ConnectBtn, 
+        $ConnectBtn,
+        $TenantNoteLabel,
         $TitleActions, 
         $LogBoxLabel, 
         $LogBox, 
@@ -369,9 +390,8 @@ $MainForm.controls.AddRange(@($Title,
         $ScanGroupBox,
         $InputCsvFileBox,
         $TagDeviceGroupBox,
-        $ExportLogBtn,
-        $GetActionsHistoryBtn,
-        $ExportActionsHistoryBtn))
+        $ExportLogBtn
+    ))
 
 
 #===========================================================[Functions]===========================================================
@@ -433,7 +453,7 @@ function GetToken {
     $LogBox.AppendText((get-date).ToString() + " Successfully connected to CrowdStrike (client_id: " + $appId + $(if ($cid) { ", cid: $cid" } else { "" }) + ")" + [Environment]::NewLine)
     # show token in logs for debugging purposes (remove in production)
     # $LogBox.AppendText((get-date).ToString() + " Token: " + $token + [Environment]::NewLine)
-    ChangeButtonColours -Buttons $GetDevicesFromQueryBtn, $SelectedDevicesBtn, $ClearSelectedDevicesBtn, $ExportActionsHistoryBtn, $GetActionsHistoryBtn, $BrowseCsvBtn
+    ChangeButtonColours -Buttons $GetDevicesFromQueryBtn, $SelectedDevicesBtn, $ClearSelectedDevicesBtn, $BrowseCsvBtn
     SaveCreds
     $Devicetag.Enabled = $true
     $CsvPathBox.Enabled = $true
@@ -569,8 +589,107 @@ function AddTagDevice {
     }
 }
 
+function RemoveTagDevice {
+    # Validate selection and tag
+    if (-not $script:selectedmachines -or $script:selectedmachines.Count -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No devices selected.", "Info")
+        return
+    }
+
+    $MachineTag = $DeviceTag.Text.Trim()
+    if (-not $MachineTag) {
+        [System.Windows.Forms.MessageBox]::Show("Please enter a tag to remove.", "Info")
+        return
+    }
+
+    # if tag does not start with "FalconGroupingTags/", tell user to rewrite it because this is required by Crowdstrike API
+    if ($MachineTag -notmatch '^FalconGroupingTags\/') {
+        [System.Windows.Forms.MessageBox]::Show("Tag must begin with 'FalconGroupingTags/'. Please rewrite the tag.", "Info")
+        return
+    }
+
+    # Get authentication headers (must contain Authorization). Ensure Accept header present.
+    $authHeaders = if ($script:headers) { @($script:headers) } elseif ($headers) { @($headers) } else {
+        [System.Windows.Forms.MessageBox]::Show("Not connected. Please connect first.", "Error")
+        return
+    }
+
+    # Normalize headers hashtable (in case it's an array-wrapped hashtable)
+    if ($authHeaders -is [System.Collections.Hashtable] -eq $false) {
+        $authHeaders = @{}
+        foreach ($k in $script:headers.Keys) { $authHeaders[$k] = $script:headers[$k] }
+    }
+
+    if (-not $authHeaders.ContainsKey('Accept')) {
+        $authHeaders['Accept'] = 'application/json'
+    }
+
+    # Ensure Authorization begins with "Bearer "
+    if ($authHeaders.ContainsKey('Authorization')) {
+        if ($authHeaders['Authorization'] -notmatch '(?i)^Bearer\s') {
+            $authHeaders['Authorization'] = "Bearer $($authHeaders['Authorization'])"
+        }
+    }
+    else {
+        [System.Windows.Forms.MessageBox]::Show("Missing Authorization header. Please connect first.", "Error")
+        return
+    }
+
+    $allIds = $script:selectedmachines.Values | ForEach-Object { $_.ToString() } | Select-Object -Unique
+    $total = $allIds.Count
+
+    if ($total -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No device ids found to remove tag from.", "Info")
+        return
+    }
+
+    # Enforce limitation: do not proceed if 5000 or more devices
+    if ($total -ge 5000) {
+        [System.Windows.Forms.MessageBox]::Show("Too many devices selected ($total). Due to API limits please use smaller CSV files and run the script multiple times with subsets (e.g. split CSV into multiple files).", "Limit Exceeded")
+        $LogBox.AppendText((Get-Date).ToString() + " Remove tag aborted: $total devices selected (limit is < 5000). User instructed to split CSV and retry." + [Environment]::NewLine)
+        return
+    }
+
+    $url = "https://api.eu-1.crowdstrike.com/devices/entities/devices/tags/v1"
+    $body = @{
+        device_ids = @($allIds)
+        action     = "remove"
+        tags       = @($MachineTag)
+    }
+
+    try {
+        $response = Invoke-RestMethod -Method Patch -Uri $url -Headers $authHeaders -Body ($body | ConvertTo-Json -Depth 5) -ContentType 'application/json' -ErrorAction Stop
+
+        if ($null -ne $response) {
+            $respText = ($response | Out-String).Trim() -replace "\s+", " "
+            $LogBox.AppendText((Get-Date).ToString() + " Removed tag '$MachineTag' from $total device(s). Response: " + $respText + [Environment]::NewLine)
+        }
+        else {
+            $LogBox.AppendText((Get-Date).ToString() + " Removed tag '$MachineTag' from $total device(s). No body returned." + [Environment]::NewLine)
+        }
+
+        [System.Windows.Forms.MessageBox]::Show("Remove tag operation completed for $total device(s). See logs for details.", "Info")
+    }
+    catch {
+        $errMsg = $_.Exception.Message
+        if ($_.Exception.Response -and ($_.Exception.Response.Content)) {
+            try {
+                $raw = $_.Exception.Response.Content
+                $parsed = $raw | ConvertFrom-Json -ErrorAction Stop
+                $errMsg = ($parsed | Out-String).Trim()
+            }
+            catch {
+                $errMsg = $_.Exception.Response.Content
+            }
+        }
+
+        $LogBox.AppendText((Get-Date).ToString() + " Failed to remove tag '$MachineTag' from $total device(s). Error: " + ($errMsg -replace "\s+", " ") + [Environment]::NewLine)
+        [System.Windows.Forms.MessageBox]::Show("Error removing tag from devices: " + $errMsg, "Error")
+    }
+}
+
 # This function uses Crowdstrike API to isolate devices but has not been tested yet
-function IsolateDevice {
+function NetworkContainDevice {
     # Use CrowdStrike "contain" action on selected device AIDs (ids). Batches of 99.
     if (-not $script:selectedmachines -or $script:selectedmachines.Count -eq 0) {
         [System.Windows.Forms.MessageBox]::Show("No devices selected.", "Info")
@@ -829,10 +948,14 @@ function GetDevicesFromCsv {
         }
 
         if ($script:selectedmachines.Keys.Count -gt 0) {
-            ChangeButtonColours -Buttons $TagDeviceBtn, $IsolateDeviceBtn, $ReleaseFromIsolationBtn
+            ChangeButtonColours -Buttons $TagDeviceBtn, $RemoveTagBtn, $NetworkContainDeviceBtn, $ReleaseFromIsolationBtn
             $SelectedDevicesBtn.Visible = $true
             $SelectedDevicesBtn.Text = "Selected Devices (" + $script:selectedmachines.Keys.count + ")"
             $ClearSelectedDevicesBtn.Visible = $true
+            $TagDeviceBtn.Enabled = $true
+            $RemoveTagBtn.Enabled = $true
+            $NetworkContainDeviceBtn.Enabled = $true
+            $ReleaseFromIsolationBtn.Enabled = $true
         }
 
         $LogBox.AppendText((get-date).ToString() + " Devices selected count: " + $script:selectedmachines.Keys.count + [Environment]::NewLine)
@@ -841,45 +964,6 @@ function GetDevicesFromCsv {
         [System.Windows.Forms.MessageBox]::Show($CsvPathBox.Text + " is not a valid CSV path." , "Error")
     }
 }
-
-# To be rewritten for Crowdstrike API since this is currently for MS Defender API
-function GetActionsHistory {
-    $LogBox.AppendText("Getting machine actions list.." + [Environment]::NewLine)
-    $url = "https://api-us.securitycenter.windows.com/api/machineactions" 
-    try { $webResponse = Invoke-WebRequest -Method Get -Uri $url -Headers $headers -ErrorAction Stop }
-    Catch {
-        if ($_.ErrorDetails.Message) {
-            [System.Windows.Forms.MessageBox]::Show("ErrorMessage: " + $_.ErrorDetails.Message , "Error")
-        }
-        else {
-            $LogBox.AppendText((get-date).ToString() + " Status: " + $webResponse.StatusCode)
-        }
-    }
-    $results = ($webResponse.Content | Convertfrom-json).value
-    $LogBox.AppendText((get-date).ToString() + " Status: " + $webResponse.StatusCode + " Machine actions count: " + $results.count + [Environment]::NewLine)
-    $LogBox.AppendText((get-date).ToString() + " Last 10 machine actions: " + ($results | Select-Object type, computerDnsName, status -First 10 | Out-string) + [Environment]::NewLine)
-    $results | Out-GridView -Title "Actions History" -PassThru 
-}
-
-# To be rewritten for Crowdstrike API since this is currently for MS Defender API
-function ExportActionsHistory {
-    $LogBox.AppendText("Getting machine actions list.." + [Environment]::NewLine)
-    $url = "https://api-us.securitycenter.windows.com/api/machineactions" 
-    try { $webResponse = Invoke-WebRequest -Method Get -Uri $url -Headers $headers -ErrorAction Stop }
-    Catch {
-        if ($_.ErrorDetails.Message) {
-            [System.Windows.Forms.MessageBox]::Show("ErrorMessage: " + $_.ErrorDetails.Message , "Error")
-        }
-        else {
-            $LogBox.AppendText((get-date).ToString() + " Status: " + $webResponse.StatusCode)
-        }
-    }
-    $results = ($webResponse.Content | Convertfrom-json).value
-    $LogBox.AppendText((get-date).ToString() + " Status: " + $webResponse.StatusCode + " Machine actions count: " + $results.count + [Environment]::NewLine)
-    $results | Export-Csv -Path .\Response_Actions.csv -NoTypeInformation
-    $LogBox.AppendText((get-date).ToString() + " Export file created: " + (Get-Item .\Response_Actions.csv).FullName + [Environment]::NewLine)
-}
-
 
 function ExportLog {
     $LogBox.Text | Out-file .\crowdstrike_ui_log.txt
@@ -898,12 +982,20 @@ if (test-path $credspath) {
     $AppSecretBox.Text = $unsecurePassword
 }
 
-
 $ConnectBtn.Add_Click({ GetToken })
 
 $TagDeviceBtn.Add_Click({ AddTagDevice })
 
-$IsolateDeviceBtn.Add_Click({ IsolateDevice })
+$RemoveTagBtn.Add_Click({ RemoveTagDevice })
+
+# set text to "FalconGroupingTags/" when clicking on the DeviceTag box for user convenience
+$DeviceTag.Add_Click({
+        if ($DeviceTag.Text -eq "") {
+            $DeviceTag.Text = "FalconGroupingTags/"
+        }
+    })
+
+$NetworkContainDeviceBtn.Add_Click({ NetworkContainDevice })
 
 $ReleaseFromIsolationBtn.Add_Click({ ReleaseFromIsolation })
 
@@ -924,10 +1016,6 @@ $SelectedDevicesBtn.Add_Click({ ViewSelectedDevices })
 $ClearSelectedDevicesBtn.Add_Click({ ClearSelectedDevices })
 
 $ExportLogBtn.Add_Click({ ExportLog })
-
-$GetActionsHistoryBtn.Add_Click({ getActionsHistory })
-
-$ExportActionsHistoryBtn.Add_Click({ ExportActionsHistory })
 
 $MainForm.ResumeLayout()
 [void]$MainForm.ShowDialog()
