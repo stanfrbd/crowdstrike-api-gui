@@ -25,6 +25,7 @@ Note: this project has nothing to do with Microsoft nor Crowdstrike. It is just 
 - Bulk Network Containment: implemented and tested but needs additional tests, especially on large CSV files (100+ hostnames) ⚠️
 - Bulk Lift Containment: implemented and tested but needs additional tests, especially on large CSV files (100+ hostnames) ⚠️
 - Logging: to improve ⚠️
+- Creds storage: SecureString (DPAPI) so should really be stored.
 
 <img width="947" height="827" alt="image" src="https://github.com/user-attachments/assets/53e8c60f-fa5c-4349-9676-c7180be3b9fc" />
 
