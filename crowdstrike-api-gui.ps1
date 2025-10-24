@@ -98,21 +98,21 @@ $AppSecretBox.Font = $TextBoxFont
 $AppSecretBox.Visible = $true
 $AppSecretBox.PasswordChar = '*'
 
-$TenantIdBoxLabel = New-Object system.Windows.Forms.Label
-$TenantIdBoxLabel.text = "Tenant Id:"
-$TenantIdBoxLabel.AutoSize = $true
-$TenantIdBoxLabel.width = 25
-$TenantIdBoxLabel.height = 10
-$TenantIdBoxLabel.location = New-Object System.Drawing.Point(20, 100)
-$TenantIdBoxLabel.Font = 'Microsoft Sans Serif,10,style=Bold'
+$CidBoxLabel = New-Object system.Windows.Forms.Label
+$CidBoxLabel.text = "CID:"
+$CidBoxLabel.AutoSize = $true
+$CidBoxLabel.width = 25
+$CidBoxLabel.height = 10
+$CidBoxLabel.location = New-Object System.Drawing.Point(20, 100)
+$CidBoxLabel.Font = 'Microsoft Sans Serif,10,style=Bold'
 
-$TenantIdBox = New-Object system.Windows.Forms.TextBox
-$TenantIdBox.multiline = $false
-$TenantIdBox.width = 314
-$TenantIdBox.height = 20
-$TenantIdBox.location = New-Object System.Drawing.Point(100, 100)
-$TenantIdBox.Font = $TextBoxFont
-$TenantIdBox.Visible = $true
+$CidBox = New-Object system.Windows.Forms.TextBox
+$CidBox.multiline = $false
+$CidBox.width = 314
+$CidBox.height = 20
+$CidBox.location = New-Object System.Drawing.Point(100, 100)
+$CidBox.Font = $TextBoxFont
+$CidBox.Visible = $true
 
 $ConnectionStatusLabel = New-Object system.Windows.Forms.Label
 $ConnectionStatusLabel.text = "Status:"
@@ -161,7 +161,7 @@ $TagDeviceGroupBox = New-Object System.Windows.Forms.GroupBox
 $TagDeviceGroupBox.Location = New-Object System.Drawing.Point(500, 40)
 $TagDeviceGroupBox.width = 400
 $TagDeviceGroupBox.height = 50
-$TagDeviceGroupBox.Text = "Device tag"
+$TagDeviceGroupBox.Text = "Falcon Grouping Tag"
 $TagDeviceGroupBox.Font = 'Microsoft Sans Serif,10,style=Bold'
 
 $DeviceTag = New-Object system.Windows.Forms.TextBox
@@ -172,6 +172,7 @@ $DeviceTag.location = New-Object System.Drawing.Point(20, 20)
 $Devicetag.Font = 'Microsoft Sans Serif,10'
 $DeviceTag.Visible = $true
 $Devicetag.Enabled = $false
+$DeviceTag.PlaceholderText = "FalconGroupingTags/..."
 
 $TagDeviceBtn = New-Object system.Windows.Forms.Button
 $TagDeviceBtn.BackColor = $UnclickableColour
@@ -185,89 +186,34 @@ $TagDeviceBtn.Visible = $true
 
 $TagDeviceGroupBox.Controls.AddRange(@($DeviceTag, $TagDeviceBtn))
 
-$ScanGroupBox = New-Object System.Windows.Forms.GroupBox
-$ScanGroupBox.Location = New-Object System.Drawing.Point(500, 105)
-$ScanGroupBox.width = 400
-$ScanGroupBox.height = 50
-$ScanGroupBox.Text = "Scan mode"
-$ScanGroupBox.Font = 'Microsoft Sans Serif,10,style=Bold'
-
-$ScanRadioButton1 = New-Object System.Windows.Forms.RadioButton
-$ScanRadioButton1.Width = 80
-$ScanRadioButton1.Height = 20
-$ScanRadioButton1.location = New-Object System.Drawing.Point(20, 20)
-$ScanRadioButton1.Checked = $false
-$ScanRadioButton1.Enabled = $false
-$ScanRadioButton1.Text = "Full Scan"
-$ScanRadioButton1.Font = 'Microsoft Sans Serif,8'
- 
-$ScanRadioButton2 = New-Object System.Windows.Forms.RadioButton
-$ScanRadioButton2.Width = 80
-$ScanRadioButton2.Height = 20
-$ScanRadioButton2.location = New-Object System.Drawing.Point(120, 20)
-$ScanRadioButton2.Checked = $true
-$ScanRadioButton2.Enabled = $false
-$ScanRadioButton2.Text = "Quick Scan"
-$ScanRadioButton2.Font = 'Microsoft Sans Serif,8'
-
-$ScanDeviceBtn = New-Object system.Windows.Forms.Button
-$ScanDeviceBtn.BackColor = $UnclickableColour
-$ScanDeviceBtn.text = "AV Scan"
-$ScanDeviceBtn.width = 110
-$ScanDeviceBtn.height = 30
-$ScanDeviceBtn.location = New-Object System.Drawing.Point(280, 15)
-$ScanDeviceBtn.Font = 'Microsoft Sans Serif,10'
-$ScanDeviceBtn.ForeColor = "#ffffff"
-$ScanDeviceBtn.Visible = $true
-
-$ScanGroupBox.Controls.AddRange(@($ScanRadioButton1, $ScanRadioButton2, $ScanDeviceBtn))
-
 $IsolateGroupBox = New-Object System.Windows.Forms.GroupBox
-$IsolateGroupBox.Location = '500,165'
+$IsolateGroupBox.Location = New-Object System.Drawing.Point(500, 165)
 $IsolateGroupBox.Width = 400
-$IsolateGroupBox.height = 90
-$IsolateGroupBox.text = "Isolation"
+$IsolateGroupBox.Height = 60
+$IsolateGroupBox.Text = "Network Containment Actions"
 $IsolateGroupBox.Font = 'Microsoft Sans Serif,10,style=Bold'
 
-$IsolateRadioButton1 = New-Object System.Windows.Forms.RadioButton
-$IsolateRadioButton1.width = 60
-$IsolateRadioButton1.height = 20
-$IsolateRadioButton1.location = New-Object System.Drawing.Point(20, 20)
-$IsolateRadioButton1.Checked = $false
-$IsolateRadioButton1.Enabled = $false
-$IsolateRadioButton1.Text = "Full"
-$IsolateRadioButton1.Font = 'Microsoft Sans Serif,8'
- 
-$IsolateRadioButton2 = New-Object System.Windows.Forms.RadioButton
-$IsolateRadioButton2.width = 120
-$IsolateRadioButton2.height = 20
-$IsolateRadioButton2.location = New-Object System.Drawing.Point(120, 20)
-$IsolateRadioButton2.Checked = $true
-$IsolateRadioButton2.Enabled = $false
-$IsolateRadioButton2.Text = "Selective"
-$IsolateRadioButton2.Font = 'Microsoft Sans Serif,8'
-
-$IsolateDeviceBtn = New-Object system.Windows.Forms.Button
+$IsolateDeviceBtn = New-Object System.Windows.Forms.Button
 $IsolateDeviceBtn.BackColor = $UnclickableColour
-$IsolateDeviceBtn.text = "Isolate Device"
-$IsolateDeviceBtn.width = 110
-$IsolateDeviceBtn.height = 30
-$IsolateDeviceBtn.location = New-Object System.Drawing.Point(280, 15)
+$IsolateDeviceBtn.Text = "Network Contain Devices"
+$IsolateDeviceBtn.Width = 180
+$IsolateDeviceBtn.Height = 30
+$IsolateDeviceBtn.Location = New-Object System.Drawing.Point(20, 20)
 $IsolateDeviceBtn.Font = 'Microsoft Sans Serif,10'
 $IsolateDeviceBtn.ForeColor = "#ffffff"
 $IsolateDeviceBtn.Visible = $true
 
-$ReleaseFromIsolationBtn = New-Object system.Windows.Forms.Button
+$ReleaseFromIsolationBtn = New-Object System.Windows.Forms.Button
 $ReleaseFromIsolationBtn.BackColor = $UnclickableColour
-$ReleaseFromIsolationBtn.text = "Release Device"
-$ReleaseFromIsolationBtn.width = 110
-$ReleaseFromIsolationBtn.height = 30
-$ReleaseFromIsolationBtn.location = New-Object System.Drawing.Point(280, 50)
+$ReleaseFromIsolationBtn.Text = "Release Devices"
+$ReleaseFromIsolationBtn.Width = 180
+$ReleaseFromIsolationBtn.Height = 30
+$ReleaseFromIsolationBtn.Location = New-Object System.Drawing.Point(210, 20)
 $ReleaseFromIsolationBtn.Font = 'Microsoft Sans Serif,10'
 $ReleaseFromIsolationBtn.ForeColor = "#ffffff"
 $ReleaseFromIsolationBtn.Visible = $true
 
-$IsolateGroupBox.Controls.AddRange(@($IsolateRadioButton1, $IsolateRadioButton2, $IsolateDeviceBtn, $ReleaseFromIsolationBtn))
+$IsolateGroupBox.Controls.AddRange(@($IsolateDeviceBtn, $ReleaseFromIsolationBtn))
 
 $InputCsvFileBox = New-Object System.Windows.Forms.GroupBox
 $InputCsvFileBox.width = 880
@@ -411,10 +357,10 @@ $MainForm.controls.AddRange(@($Title,
         $cancelBtn, 
         $AppIdBox, 
         $AppSecretBox,
-        $TenantIdBox, 
+        $CidBox, 
         $AppIdBoxLabel, 
         $AppSecretBoxLabel, 
-        $TenantIdBoxLabel, 
+        $CidBoxLabel, 
         $ConnectBtn, 
         $TitleActions, 
         $LogBoxLabel, 
@@ -439,12 +385,17 @@ function GetToken {
     $ConnectionStatus.Text = 'Connecting...'
     $appId = $AppIdBox.Text
     $appSecret = $AppSecretBox.Text
+    $cid = $CidBox.Text.Trim()
 
     $oAuthUri = "https://api.eu-1.crowdstrike.com/oauth2/token"
     $authBody = @{
         client_id     = $appId
         client_secret = $appSecret
         grant_type    = 'client_credentials'
+    }
+
+    if ($cid) {
+        $authBody['member_cid'] = $cid
     }
 
     try {
@@ -480,11 +431,10 @@ function GetToken {
 
     $ConnectionStatus.text = "Connected"
     $ConnectionStatus.ForeColor = "#7ed321"
-    $LogBox.AppendText((get-date).ToString() + " Successfully connected to CrowdStrike (client_id: " + $appId + ")" + [Environment]::NewLine)
+    $LogBox.AppendText((get-date).ToString() + " Successfully connected to CrowdStrike (client_id: " + $appId + $(if ($cid) { ", cid: $cid" } else { "" }) + ")" + [Environment]::NewLine)
     # show token in logs for debugging purposes (remove in production)
     # $LogBox.AppendText((get-date).ToString() + " Token: " + $token + [Environment]::NewLine)
     ChangeButtonColours -Buttons $GetDevicesFromQueryBtn, $SelectedDevicesBtn, $ClearSelectedDevicesBtn, $ExportActionsHistoryBtn, $GetActionsHistoryBtn, $BrowseCsvBtn
-    EnableRadioButtons
     SaveCreds
     $Devicetag.Enabled = $true
     $CsvPathBox.Enabled = $true
@@ -497,7 +447,7 @@ function SaveCreds {
     if ($SaveCredCheckbox.Checked) {
         $securespassword = $AppSecretBox.Text | ConvertTo-SecureString -AsPlainText -Force
         $securestring = $securespassword | ConvertFrom-SecureString
-        $creds = @($TenantIdBox.Text, $AppIdBox.Text, $securestring)
+        $creds = @($CidBox.Text, $AppIdBox.Text, $securestring)
         $creds | Out-File $credspath
     }
 }
@@ -515,116 +465,276 @@ function ChangeButtonColours {
     }
 }
 
-function EnableRadioButtons {
-    $ButtonsToEnable = $ScanRadioButton1, $ScanRadioButton2, $IsolateRadioButton1, $IsolateRadioButton2
-
-    foreach ( $Button in $ButtonsToEnable) {
-        $Button.Enabled = $true
-    }
-}
-
-# To be rewritten for Crowdstrike API since this is currently for MS Defender API
 function TagDevice {
-    $script:selectedmachines.GetEnumerator() | foreach-object {
-        Start-Sleep -Seconds 1
-        $MachineId = $_.value
-        $MachineTag = $DeviceTag.Text
-        $body = @{
-            "Value"  = $MachineTag;
-            "Action" = "Add";
+    # Validate selection and tag
+    if (-not $script:selectedmachines -or $script:selectedmachines.Count -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No devices selected.", "Info")
+        return
+    }
+
+    $MachineTag = $DeviceTag.Text.Trim()
+    if (-not $MachineTag) {
+        [System.Windows.Forms.MessageBox]::Show("Please enter a tag to apply.", "Info")
+        return
+    }
+
+    # if tag does not start with "FalconGroupingTags/", tell user to rewrite it because this is required by Crowdstrike API
+    if ($MachineTag -notmatch '^FalconGroupingTags\/') {
+        [System.Windows.Forms.MessageBox]::Show("Tag must begin with 'FalconGroupingTags/'. Please rewrite the tag.", "Info")
+        return
+    }
+
+    # Get authentication headers (must contain Authorization). Ensure Accept header present.
+    $authHeaders = if ($script:headers) { @($script:headers) } elseif ($headers) { @($headers) } else {
+        [System.Windows.Forms.MessageBox]::Show("Not connected. Please connect first.", "Error")
+        return
+    }
+
+    # Normalize headers hashtable (in case it's an array-wrapped hashtable)
+    if ($authHeaders -is [System.Collections.Hashtable] -eq $false) {
+        $authHeaders = @{}
+        foreach ($k in $script:headers.Keys) { $authHeaders[$k] = $script:headers[$k] }
+    }
+
+    if (-not $authHeaders.ContainsKey('Accept')) {
+        $authHeaders['Accept'] = 'application/json'
+    }
+
+    # Ensure Authorization begins with "Bearer "
+    if ($authHeaders.ContainsKey('Authorization')) {
+        if ($authHeaders['Authorization'] -notmatch '(?i)^Bearer\s') {
+            $authHeaders['Authorization'] = "Bearer $($authHeaders['Authorization'])"
+        }
+    }
+    else {
+        [System.Windows.Forms.MessageBox]::Show("Missing Authorization header. Please connect first.", "Error")
+        return
+    }
+
+    $allIds = $script:selectedmachines.Values | ForEach-Object { $_.ToString() } | Select-Object -Unique
+    $total = $allIds.Count
+
+    if ($total -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No device ids found to tag.", "Info")
+        return
+    }
+
+    # Enforce limitation: do not proceed if 5000 or more devices
+    if ($total -ge 5000) {
+        [System.Windows.Forms.MessageBox]::Show("Too many devices selected ($total). Due to API limits please use smaller CSV files and run the script multiple times with subsets (e.g. split CSV into multiple files).", "Limit Exceeded")
+        $LogBox.AppendText((Get-Date).ToString() + " Tagging aborted: $total devices selected (limit is < 5000). User instructed to split CSV and retry." + [Environment]::NewLine)
+        return
+    }
+
+    $url = "https://api.eu-1.crowdstrike.com/devices/entities/devices/tags/v1"
+    $body = @{
+        device_ids = @($allIds)
+        action     = "add"
+        tags       = @($MachineTag)
+    }
+
+    # show the query in logs for debugging purposes (remove in production)
+    # $LogBox.AppendText((Get-Date).ToString() + " Tagging $total device(s) with tag '$MachineTag'. API URL: $url. Body: " + ($body | ConvertTo-Json -Depth 5) + [Environment]::NewLine)
+
+    try {
+        # Use Invoke-RestMethod to perform the PATCH (mirrors the curl behavior)
+        $response = Invoke-RestMethod -Method Patch -Uri $url -Headers $authHeaders -Body ($body | ConvertTo-Json -Depth 5) -ContentType 'application/json' -ErrorAction Stop
+
+        # Log success. If API returns a body include a compacted representation.
+        if ($null -ne $response) {
+            $respText = ($response | Out-String).Trim() -replace "\s+", " "
+            $LogBox.AppendText((Get-Date).ToString() + " Applied tag '$MachineTag' to $total device(s). Response: " + $respText + [Environment]::NewLine)
+        }
+        else {
+            $LogBox.AppendText((Get-Date).ToString() + " Applied tag '$MachineTag' to $total device(s). No body returned." + [Environment]::NewLine)
         }
 
-        $url = "https://api.securitycenter.windows.com/api/machines/$MachineId/tags" 
-        try { $webResponse = Invoke-WebRequest -Method Post -Uri $url -Headers $headers -Body ($body | ConvertTo-Json) -ContentType "application/json" -ErrorAction Stop }
-        Catch {
-            if ($_.ErrorDetails.Message) {
-                [System.Windows.Forms.MessageBox]::Show("ErrorMessage: " + $_.ErrorDetails.Message , "Error")
+        [System.Windows.Forms.MessageBox]::Show("Tag operation completed for $total device(s). See logs for details.", "Info")
+    }
+    catch {
+        $errMsg = $_.Exception.Message
+        if ($_.Exception.Response -and ($_.Exception.Response.Content)) {
+            try {
+                $raw = $_.Exception.Response.Content
+                $parsed = $raw | ConvertFrom-Json -ErrorAction Stop
+                $errMsg = ($parsed | Out-String).Trim()
             }
-            else {
-                [System.Windows.Forms.MessageBox]::Show("Status: " + $webResponse.StatusCode)
+            catch {
+                # fallback to raw content string
+                $errMsg = $_.Exception.Response.Content
             }
         }
-        if ($null -ne $webResponse.statuscode) { 
-            $LogBox.AppendText((get-date).ToString() + " Applying machine tag: " + $MachineTag + " Machine Name: " + $_.Key + " Status code: " + $webResponse.statuscode + [Environment]::NewLine) 
-        }
-        
+
+        $LogBox.AppendText((Get-Date).ToString() + " Failed to apply tag '$MachineTag' to $total device(s). Error: " + ($errMsg -replace "\s+", " ") + [Environment]::NewLine)
+        [System.Windows.Forms.MessageBox]::Show("Error applying tag to devices: " + $errMsg, "Error")
     }
 }
 
-
-# To be rewritten for Crowdstrike API since this is currently for MS Defender API
-function ScanDevice {
-    $script:selectedmachines.GetEnumerator() | foreach-object {
-        Start-Sleep -Seconds 1
-        $machineid = $_.Value
-        if ($ScanRadioButton1.Checked) { $ScanMode = 'Full' } else { $ScanMode = 'Quick' }
-        $body = @{
-            "Comment"  = "AV Scan";
-            "ScanType" = $ScanMode;
-        }
-        $url = "https://api.securitycenter.windows.com/api/machines/$machineid/runAntiVirusScan" 
-        try { $webResponse = Invoke-WebRequest -Method Post -Uri $url -Headers $headers -Body ($body | ConvertTo-Json) -ContentType "application/json" -ErrorAction Stop }
-        Catch {
-            if ($_.ErrorDetails.Message) {
-                [System.Windows.Forms.MessageBox]::Show("ErrorMessage: " + $_.ErrorDetails.Message , "Error")
-            }
-            else {
-                [System.Windows.Forms.MessageBox]::Show("Status: " + $webResponse.StatusCode)
-            }
-        }
-        if ($null -ne $webResponse.statuscode) { $LogBox.AppendText((get-date).ToString() + " " + $ScanMode + " AV Scan on Machine Name: " + $_.Key + " Status code: " + $webResponse.statuscode + [Environment]::NewLine) }
-    }
-}
-
-# To be rewritten for Crowdstrike API since this is currently for MS Defender API
+# This function uses Crowdstrike API to isolate devices but has not been tested yet
 function IsolateDevice {
-    $script:selectedmachines.GetEnumerator() | foreach-object {
-        Start-Sleep -Seconds 1
-        $machineid = $_.Value
-        $IsolationType = 'Selective'
-        if ($IsolateRadioButton1.Checked) { $IsolationType = 'Full' }
-        $body = @{
-            "Comment"       = "Isolating device";
-            "IsolationType" = $IsolationType;
+    # Use CrowdStrike "contain" action on selected device AIDs (ids). Batches of 99.
+    if (-not $script:selectedmachines -or $script:selectedmachines.Count -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No devices selected.", "Info")
+        return
+    }
+
+    # Normalize/auth headers
+    $authHeaders = if ($script:headers) { @($script:headers) } elseif ($headers) { @($headers) } else {
+        [System.Windows.Forms.MessageBox]::Show("Not connected. Please connect first.", "Error")
+        return
+    }
+    if ($authHeaders -isnot [hashtable]) {
+        $tmp = @{}
+        foreach ($k in $script:headers.Keys) { $tmp[$k] = $script:headers[$k] }
+        $authHeaders = $tmp
+    }
+    if (-not $authHeaders.ContainsKey('Accept')) { $authHeaders['Accept'] = 'application/json' }
+    if ($authHeaders.ContainsKey('Authorization')) {
+        if ($authHeaders['Authorization'] -notmatch '(?i)^Bearer\s') {
+            $authHeaders['Authorization'] = "Bearer $($authHeaders['Authorization'])"
         }
-        $url = "https://api.securitycenter.windows.com/api/machines/$machineid/isolate" 
-        try { $webResponse = Invoke-WebRequest -Method Post -Uri $url -Headers $headers -Body ($body | ConvertTo-Json) -ContentType "application/json" -ErrorAction Stop }
-        Catch {
-            if ($_.ErrorDetails.Message) {
-                #[System.Windows.Forms.MessageBox]::Show("ErrorMessage: " + $_.ErrorDetails.Message + $_.ErrorDetails, "Error")
-                $LogBox.AppendText((get-date).ToString() + " ErrorMessage: " + $_.ErrorDetails.Message + $_.Exception.Response.StatusCode + [Environment]::NewLine)
-                
+    }
+    else {
+        [System.Windows.Forms.MessageBox]::Show("Missing Authorization header. Please connect first.", "Error")
+        return
+    }
+
+    $allIds = $script:selectedmachines.Values | ForEach-Object { $_.ToString() } | Select-Object -Unique
+    $total = $allIds.Count
+    if ($total -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No device ids found to contain.", "Info")
+        return
+    }
+
+    $LogBox.AppendText((Get-Date).ToString() + " Starting contain action for $total device(s)..." + [Environment]::NewLine)
+
+    $urlBase = "https://api.eu-1.crowdstrike.com/devices/entities/devices-actions/v2"
+    $batchSize = 99
+
+    for ($i = 0; $i -lt $allIds.Count; $i += $batchSize) {
+        $end = [math]::Min($allIds.Count - 1, $i + $batchSize - 1)
+        $batch = $allIds[$i..$end]
+        $body = @{ ids = @($batch) }
+
+        $LogBox.AppendText((Get-Date).ToString() + " Sending contain request for batch " + ([int]($i / $batchSize) + 1) + " (count: " + $batch.Count + ")." + [Environment]::NewLine)
+
+        try {
+            $resp = Invoke-RestMethod -Method Post -Uri ($urlBase + "?action_name=contain") -Headers $authHeaders -Body ($body | ConvertTo-Json -Depth 5) -ContentType 'application/json' -ErrorAction Stop
+
+            # Log a compact response if present
+            if ($null -ne $resp) {
+                $respText = ($resp | Out-String).Trim() -replace "\s+", " "
+                $LogBox.AppendText((Get-Date).ToString() + " Batch contained. Response: " + $respText + [Environment]::NewLine)
             }
             else {
-                [System.Windows.Forms.MessageBox]::Show("Status: " + $webResponse.StatusCode)
+                $LogBox.AppendText((Get-Date).ToString() + " Batch contained. No body returned." + [Environment]::NewLine)
             }
         }
-        if ($null -ne $webResponse.statuscode) { $LogBox.AppendText((get-date).ToString() + " " + $IsolationType + " Isolation on: " + " Machine Name: " + $_.Key + " Status code: " + $webResponse.statuscode + [Environment]::NewLine) }
+        catch {
+            $errMsg = $_.Exception.Message
+            if ($_.Exception.Response -and ($_.Exception.Response.Content)) {
+                try {
+                    $raw = $_.Exception.Response.Content
+                    $parsed = $raw | ConvertFrom-Json -ErrorAction Stop
+                    $errMsg = ($parsed | Out-String).Trim() -replace "\s+", " "
+                }
+                catch {
+                    $errMsg = $_.Exception.Response.Content
+                }
+            }
+            $LogBox.AppendText((Get-Date).ToString() + " Failed to contain batch starting at index $i. Error: " + $errMsg + [Environment]::NewLine)
+            [System.Windows.Forms.MessageBox]::Show("Error performing contain action: " + $errMsg, "Error")
+            # continue to next batch (don't abort entirely)
+        }
+
+        Start-Sleep -Milliseconds 500
     }
+
+    $LogBox.AppendText((Get-Date).ToString() + " Contain operation completed for $total device(s)." + [Environment]::NewLine)
+    [System.Windows.Forms.MessageBox]::Show("Contain operation completed for $total device(s). See logs for details.", "Info")
 }
 
-# To be rewritten for Crowdstrike API since this is currently for MS Defender API
+# This function uses Crowdstrike API to release devices from isolation but has not been tested yet
 function ReleaseFromIsolation {
-    $script:selectedmachines.GetEnumerator() | foreach-object {
-        Start-Sleep -Seconds 1
-        $machineid = $_.Value
-        $body = @{
-            "Comment" = "Releasing device from isolation";
+    # Use CrowdStrike "lift_containment" action on selected device AIDs (ids). Batches of 99.
+    if (-not $script:selectedmachines -or $script:selectedmachines.Count -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No devices selected.", "Info")
+        return
+    }
+
+    # Normalize/auth headers
+    $authHeaders = if ($script:headers) { @($script:headers) } elseif ($headers) { @($headers) } else {
+        [System.Windows.Forms.MessageBox]::Show("Not connected. Please connect first.", "Error")
+        return
+    }
+    if ($authHeaders -isnot [hashtable]) {
+        $tmp = @{}
+        foreach ($k in $script:headers.Keys) { $tmp[$k] = $script:headers[$k] }
+        $authHeaders = $tmp
+    }
+    if (-not $authHeaders.ContainsKey('Accept')) { $authHeaders['Accept'] = 'application/json' }
+    if ($authHeaders.ContainsKey('Authorization')) {
+        if ($authHeaders['Authorization'] -notmatch '(?i)^Bearer\s') {
+            $authHeaders['Authorization'] = "Bearer $($authHeaders['Authorization'])"
         }
-        $url = "https://api.securitycenter.windows.com/api/machines/$machineid/unisolate" 
-        try { $webResponse = Invoke-WebRequest -Method Post -Uri $url -Headers $headers -Body ($body | ConvertTo-Json) -ContentType "application/json" -ErrorAction Stop }
-        Catch {
-            if ($_.ErrorDetails.Message) {
-                #[System.Windows.Forms.MessageBox]::Show("ErrorMessage: " + $_.ErrorDetails.Message + $_.ErrorDetails, "Error")
-                $LogBox.AppendText("ErrorMessage: " + $_.ErrorDetails.Message + $_.Exception.Response.StatusCode + [Environment]::NewLine)
-                
+    }
+    else {
+        [System.Windows.Forms.MessageBox]::Show("Missing Authorization header. Please connect first.", "Error")
+        return
+    }
+
+    $allIds = $script:selectedmachines.Values | ForEach-Object { $_.ToString() } | Select-Object -Unique
+    $total = $allIds.Count
+    if ($total -eq 0) {
+        [System.Windows.Forms.MessageBox]::Show("No device ids found to lift containment.", "Info")
+        return
+    }
+
+    $LogBox.AppendText((Get-Date).ToString() + " Starting lift_containment action for $total device(s)..." + [Environment]::NewLine)
+
+    $urlBase = "https://api.eu-1.crowdstrike.com/devices/entities/devices-actions/v2"
+    $batchSize = 99
+
+    for ($i = 0; $i -lt $allIds.Count; $i += $batchSize) {
+        $end = [math]::Min($allIds.Count - 1, $i + $batchSize - 1)
+        $batch = $allIds[$i..$end]
+        $body = @{ ids = @($batch) }
+
+        $LogBox.AppendText((Get-Date).ToString() + " Sending lift_containment request for batch " + ([int]($i / $batchSize) + 1) + " (count: " + $batch.Count + ")." + [Environment]::NewLine)
+
+        try {
+            $resp = Invoke-RestMethod -Method Post -Uri ($urlBase + "?action_name=lift_containment") -Headers $authHeaders -Body ($body | ConvertTo-Json -Depth 5) -ContentType 'application/json' -ErrorAction Stop
+
+            if ($null -ne $resp) {
+                $respText = ($resp | Out-String).Trim() -replace "\s+", " "
+                $LogBox.AppendText((Get-Date).ToString() + " Batch lift_containment completed. Response: " + $respText + [Environment]::NewLine)
             }
             else {
-                [System.Windows.Forms.MessageBox]::Show("Status: " + $webResponse.StatusCode)
+                $LogBox.AppendText((Get-Date).ToString() + " Batch lift_containment completed. No body returned." + [Environment]::NewLine)
             }
         }
-        if ($null -ne $webResponse.statuscode) { $LogBox.AppendText($IsolationType + " Releasing isolation on: " + " Machine Name: " + $_.Key + " Status code: " + $webResponse.statuscode + [Environment]::NewLine) }
+        catch {
+            $errMsg = $_.Exception.Message
+            if ($_.Exception.Response -and ($_.Exception.Response.Content)) {
+                try {
+                    $raw = $_.Exception.Response.Content
+                    $parsed = $raw | ConvertFrom-Json -ErrorAction Stop
+                    $errMsg = ($parsed | Out-String).Trim() -replace "\s+", " "
+                }
+                catch {
+                    $errMsg = $_.Exception.Response.Content
+                }
+            }
+            $LogBox.AppendText((Get-Date).ToString() + " Failed to lift containment for batch starting at index $i. Error: " + $errMsg + [Environment]::NewLine)
+            [System.Windows.Forms.MessageBox]::Show("Error performing lift_containment action: " + $errMsg, "Error")
+            # continue to next batch
+        }
+
+        Start-Sleep -Milliseconds 500
     }
+
+    $LogBox.AppendText((Get-Date).ToString() + " Lift containment operation completed for $total device(s)." + [Environment]::NewLine)
+    [System.Windows.Forms.MessageBox]::Show("Lift containment operation completed for $total device(s). See logs for details.", "Info")
 }
 
 
@@ -669,7 +779,7 @@ function GetDevicesFromCsv {
             $fullUri = "https://api.eu-1.crowdstrike.com/devices/queries/devices/v1?filter=$encodedFilter&sort=last_seen.desc&limit=1"
 
             # write in the logs the query being made (for debugging purposes)
-            $LogBox.AppendText((get-date).ToString() + " Querying URI: " + $fullUri + [Environment]::NewLine)
+            # $LogBox.AppendText((get-date).ToString() + " Querying URI: " + $fullUri + [Environment]::NewLine)
 
             try {
                 $resp = Invoke-RestMethod -Method Get -Uri $fullUri -Headers $headers -ErrorAction Stop
@@ -716,7 +826,7 @@ function GetDevicesFromCsv {
         }
 
         if ($script:selectedmachines.Keys.Count -gt 0) {
-            ChangeButtonColours -Buttons $TagDeviceBtn, $ScanDeviceBtn, $IsolateDeviceBtn, $ReleaseFromIsolationBtn
+            ChangeButtonColours -Buttons $TagDeviceBtn, $IsolateDeviceBtn, $ReleaseFromIsolationBtn
             $SelectedDevicesBtn.Visible = $true
             $SelectedDevicesBtn.Text = "Selected Devices (" + $script:selectedmachines.Keys.count + ")"
             $ClearSelectedDevicesBtn.Visible = $true
@@ -780,7 +890,7 @@ if (test-path $credspath) {
     $creds = Get-Content $credspath
     $pass = $creds[2] | ConvertTo-SecureString
     $unsecurePassword = [PSCredential]::new(0, $pass).GetNetworkCredential().Password
-    $TenantIdBox.Text = $creds[0]
+    $CidBox.Text = $creds[0]
     $AppIdBox.Text = $creds[1]
     $AppSecretBox.Text = $unsecurePassword
 }
@@ -789,8 +899,6 @@ if (test-path $credspath) {
 $ConnectBtn.Add_Click({ GetToken })
 
 $TagDeviceBtn.Add_Click({ TagDevice })
-
-$ScanDeviceBtn.Add_Click({ ScanDevice })
 
 $IsolateDeviceBtn.Add_Click({ IsolateDevice })
 
