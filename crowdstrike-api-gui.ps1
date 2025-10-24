@@ -5,14 +5,13 @@
 .DESCRIPTION
 	Sample response tool that benefits from APIs and are using PowerShell as the tool of choice to perform actions in bulk. It doesn't require installation and can easily be adapted by anyone with some scripting experience. The tool currently accepts CSVs as device input methods. Once devices are selected, these types of actions can be performed:
 
-	- Get devices IDs from Crowdstrike API
-    - Tagging devices - TODO
-	- Performing Quick/Full AV scan - TODO
-	- Performing Isolation/Release from Isolation - TODO
+	- Get devices IDs from Crowdstrike API - OK
+    - Tagging devices - OK
+	- Performing Isolation/Release from Isolation - To be tested
 
 	A Crowdstrike API client should be used with AppID and Secret is required to connect to API and the tool needs the following App Permissions:
 
-	- Scopes still to be defined
+	- Scopes still to be defined (seems to be Hosts)
     - Hosts - Read / Write
 
 #>
@@ -465,7 +464,7 @@ function ChangeButtonColours {
     }
 }
 
-function TagDevice {
+function AddTagDevice {
     # Validate selection and tag
     if (-not $script:selectedmachines -or $script:selectedmachines.Count -eq 0) {
         [System.Windows.Forms.MessageBox]::Show("No devices selected.", "Info")
@@ -613,8 +612,10 @@ function IsolateDevice {
 
     for ($i = 0; $i -lt $allIds.Count; $i += $batchSize) {
         $end = [math]::Min($allIds.Count - 1, $i + $batchSize - 1)
-        $batch = $allIds[$i..$end]
-        $body = @{ ids = @($batch) }
+        # force $allIds to be an array before slicing to avoid getting characters or unexpected elements
+        $batch = @($allIds)[$i..$end]
+        # pass the batch array directly so ConvertTo-Json serializes full ID strings
+        $body = @{ ids = $batch }
 
         $LogBox.AppendText((Get-Date).ToString() + " Sending contain request for batch " + ([int]($i / $batchSize) + 1) + " (count: " + $batch.Count + ")." + [Environment]::NewLine)
 
@@ -697,8 +698,10 @@ function ReleaseFromIsolation {
 
     for ($i = 0; $i -lt $allIds.Count; $i += $batchSize) {
         $end = [math]::Min($allIds.Count - 1, $i + $batchSize - 1)
-        $batch = $allIds[$i..$end]
-        $body = @{ ids = @($batch) }
+        # force $allIds to be an array before slicing to avoid getting characters or unexpected elements
+        $batch = @($allIds)[$i..$end]
+        # pass the batch array directly so ConvertTo-Json serializes full ID strings
+        $body = @{ ids = $batch }
 
         $LogBox.AppendText((Get-Date).ToString() + " Sending lift_containment request for batch " + ([int]($i / $batchSize) + 1) + " (count: " + $batch.Count + ")." + [Environment]::NewLine)
 
@@ -898,7 +901,7 @@ if (test-path $credspath) {
 
 $ConnectBtn.Add_Click({ GetToken })
 
-$TagDeviceBtn.Add_Click({ TagDevice })
+$TagDeviceBtn.Add_Click({ AddTagDevice })
 
 $IsolateDeviceBtn.Add_Click({ IsolateDevice })
 
