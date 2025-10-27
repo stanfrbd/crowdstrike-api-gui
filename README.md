@@ -2,6 +2,9 @@
 
 Inspired from this repo from Microsoft: https://github.com/microsoft/mde-api-gui/
 
+> [!IMPORTANT]
+> This project has nothing to do with Microsoft nor Crowdstrike.
+
 ## Pros
 
 - No installation of FalconSDK needed
@@ -11,8 +14,6 @@ Inspired from this repo from Microsoft: https://github.com/microsoft/mde-api-gui
 ## Cons
 
 - Will be more difficult to keep up to date
-
-Note: this project has nothing to do with Microsoft nor Crowdstrike. It is just a sample GUI app for Crowdstrike API.
 
 ## Scopes for Crowdstrike API Client
 
